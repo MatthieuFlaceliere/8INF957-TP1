@@ -12,6 +12,10 @@ public class TypeHebergement {
         this.libelle = libelle;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "TypeHebergement{" +
