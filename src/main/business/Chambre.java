@@ -7,13 +7,13 @@ public class Chambre {
     private Long id;
     private int prix;
     private TypeChambre typeChambre;
-    private TypeHebergement typeHebergement;
+    private Hebergement hebergement;
 
-    public Chambre(int prix, TypeChambre typeChambre, TypeHebergement typeHebergement) {
+    public Chambre(int prix, TypeChambre typeChambre, Hebergement hebergement) {
         this.id = idGenerator.incrementAndGet();
         this.prix = prix;
         this.typeChambre = typeChambre;
-        this.typeHebergement = typeHebergement;
+        this.hebergement = hebergement;
     }
 
     @Override
@@ -22,7 +22,7 @@ public class Chambre {
                 "id=" + id +
                 ", prix=" + prix +
                 ", typeChambre=" + typeChambre +
-                ", typeHebergement=" + typeHebergement +
+                ", typeHebergement=" + hebergement +
                 '}';
     }
 }
