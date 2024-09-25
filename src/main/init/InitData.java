@@ -4,6 +4,7 @@ import main.business.Adresse;
 import main.business.Hebergement;
 import main.business.TypeHebergement;
 import main.repository.AdresseRepository;
+import main.repository.GenericRepository;
 import main.repository.HebergementRepository;
 import main.repository.TypeHebergementRepository;
 
@@ -11,12 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InitData {
-    private final TypeHebergementRepository typeHebergementRepository = new TypeHebergementRepository();
-    private final AdresseRepository adresseRepository = new AdresseRepository();
-    private final HebergementRepository hebergementRepository = new HebergementRepository();
+    // private final TypeHebergementRepository typeHebergementRepository = new TypeHebergementRepository();
+    // private final AdresseRepository adresseRepository = new AdresseRepository();
+    // private final HebergementRepository hebergementRepository = new HebergementRepository();
 
-    public InitData() {
-        populateHerbergements(10);
+    private final GenericRepository<Adresse> adresseRepository = GenericRepository.getInstance(Adresse.class);
+    private final GenericRepository<TypeHebergement> typeHebergementRepository = GenericRepository.getInstance(TypeHebergement.class);
+    private final GenericRepository<Hebergement> hebergementRepository = GenericRepository.getInstance(Hebergement.class);
+
+    public InitData(int nbHerbergements) {
+        populateHerbergements(nbHerbergements);
     }
 
     private void populateHerbergements(int nbHerbergements) {
@@ -24,24 +29,26 @@ public class InitData {
         populateAdresses(nbHerbergements);
 
         for (int i = 0; i < nbHerbergements; i++) {
-            hebergementRepository.save(generateRandomHebergement(i, typeHebergementRepository.getAll(), adresseRepository.getAll()));
+            Hebergement herbergement = generateRandomHebergement(i, typeHebergementRepository.getAll(), adresseRepository.getAll());
+            hebergementRepository.save(herbergement.getId(), herbergement);
         }
     }
 
     private void populateTypeHebergement() {
         TypeHebergement typeHebergement1 = new TypeHebergement("Hôtel");
-        typeHebergementRepository.save(typeHebergement1);
+        typeHebergementRepository.save(typeHebergement1.getId(), typeHebergement1);
         TypeHebergement typeHebergement2 = new TypeHebergement("Auberge");
-        typeHebergementRepository.save(typeHebergement2);
+        typeHebergementRepository.save(typeHebergement2.getId(), typeHebergement2);
         TypeHebergement typeHebergement3 = new TypeHebergement("Maison d'hôtes");
-        typeHebergementRepository.save(typeHebergement3);
+        typeHebergementRepository.save(typeHebergement3.getId(), typeHebergement3);
         TypeHebergement typeHebergement4 = new TypeHebergement("Camping");
-        typeHebergementRepository.save(typeHebergement4);
+        typeHebergementRepository.save(typeHebergement4.getId(), typeHebergement4);
     }
 
     private void populateAdresses(int nbAdresses) {
         for (int i = 0; i < nbAdresses; i++) {
-            adresseRepository.save(generateRandomAdresse(i));
+            Adresse adresse = generateRandomAdresse(i);
+            adresseRepository.save(adresse.getId(), adresse);
         }
     }
 
