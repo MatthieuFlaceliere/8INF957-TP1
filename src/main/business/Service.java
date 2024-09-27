@@ -1,21 +1,18 @@
 package main.business;
 
-import java.util.concurrent.atomic.AtomicLong;
+import main.utils.Entity;
 
-public class Service {
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private Long id;
+public class Service extends Entity {
     private String libelle;
 
     public Service(String libelle) {
-        this.id = idGenerator.incrementAndGet();
         this.libelle = libelle;
     }
 
     @Override
     public String toString() {
         return "Service{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", libelle='" + libelle + '\'' +
                 '}';
     }

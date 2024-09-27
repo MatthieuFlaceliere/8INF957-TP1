@@ -1,10 +1,8 @@
 package main.business;
 
-import java.util.concurrent.atomic.AtomicLong;
+import main.utils.Entity;
 
-public class Adresse {
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private Long id;
+public class Adresse extends Entity {
     private String pays;
     private String province;
     private String ville;
@@ -12,16 +10,11 @@ public class Adresse {
     private String rue;
 
     public Adresse(String pays, String province, String ville, String quartier, String rue) {
-        this.id = idGenerator.incrementAndGet();
         this.pays = pays;
         this.province = province;
         this.ville = ville;
         this.quartier = quartier;
         this.rue = rue;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override
@@ -32,7 +25,7 @@ public class Adresse {
                 ", ville='" + ville + '\'' +
                 ", province='" + province + '\'' +
                 ", pays='" + pays + '\'' +
-                ", id=" + id +
+                ", id=" + getId() +
                 '}';
     }
 }

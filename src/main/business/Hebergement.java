@@ -1,11 +1,10 @@
 package main.business;
 
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import main.utils.Entity;
 
-public class Hebergement {
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private Long id;
+import java.util.List;
+
+public class Hebergement extends Entity {
     private String nom;
     private TypeHebergement type;
     private Adresse adresse;
@@ -13,7 +12,6 @@ public class Hebergement {
     private List<Chambre> chambres;
 
     public Hebergement(String nom,TypeHebergement type, Adresse adresse, List<Service> services, List<Chambre> chambres) {
-        this.id = idGenerator.incrementAndGet();
         this.nom = nom;
         this.type = type;
         this.adresse = adresse;
@@ -21,14 +19,10 @@ public class Hebergement {
         this.chambres = chambres;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     @Override
     public String toString() {
         return "Hebergement{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", nom=" + nom +
                 ", type=" + type +
                 ", adresse=" + adresse +

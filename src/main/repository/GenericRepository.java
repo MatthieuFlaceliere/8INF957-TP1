@@ -1,10 +1,12 @@
 package main.repository;
 
+import main.utils.Entity;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GenericRepository<T> {
+public class GenericRepository <T extends Entity> {
 
     // Map pour stocker les instances singleton par type
     private static final Map<Class<?>, GenericRepository<?>> instances = new HashMap<>();
@@ -17,21 +19,17 @@ public class GenericRepository<T> {
 
     // Méthode pour obtenir une instance singleton pour chaque sous-classe
     @SuppressWarnings("unchecked")
-    public static <T> GenericRepository<T> getInstance(Class<T> clazz) {
+    public static <T extends Entity> GenericRepository<T> getInstance(Class<T> clazz) {
         synchronized (instances) {
-            // Si aucune instance n'existe pour la classe donnée, on la crée
-            if (!instances.containsKey(clazz)) {
-                instances.put(clazz, new GenericRepository<>());
-            }
-            // Retourne l'instance typée correctement
-            return (GenericRepository<T>) instances.get(clazz);
+            // Utilisation de computeIfAbsent pour créer l'instance si elle n'existe pas
+            return (GenericRepository<T>) instances.computeIfAbsent(clazz, k -> new GenericRepository<>());
         }
     }
 
     // Méthode pour sauvegarder une entité
 
-    public void save(Long id, T entity) {
-        storage.put(id, entity);
+    public void save(T entity) {
+        storage.put(entity.getId(), entity);
     }
 
     // Méthode pour obtenir toutes les entités

@@ -2,23 +2,20 @@ package main.init;
 
 import main.business.Adresse;
 import main.business.Hebergement;
+import main.business.Service;
 import main.business.TypeHebergement;
-import main.repository.AdresseRepository;
 import main.repository.GenericRepository;
-import main.repository.HebergementRepository;
-import main.repository.TypeHebergementRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class InitData {
-    // private final TypeHebergementRepository typeHebergementRepository = new TypeHebergementRepository();
-    // private final AdresseRepository adresseRepository = new AdresseRepository();
-    // private final HebergementRepository hebergementRepository = new HebergementRepository();
-
+    Random r = new Random();
     private final GenericRepository<Adresse> adresseRepository = GenericRepository.getInstance(Adresse.class);
     private final GenericRepository<TypeHebergement> typeHebergementRepository = GenericRepository.getInstance(TypeHebergement.class);
     private final GenericRepository<Hebergement> hebergementRepository = GenericRepository.getInstance(Hebergement.class);
+    private final GenericRepository<Service> serviceRepository = GenericRepository.getInstance(Service.class);
 
     public InitData(int nbHerbergements) {
         populateHerbergements(nbHerbergements);
@@ -27,28 +24,30 @@ public class InitData {
     private void populateHerbergements(int nbHerbergements) {
         populateTypeHebergement();
         populateAdresses(nbHerbergements);
+        populateServices();
+        populateChambres(nbHerbergements);
 
         for (int i = 0; i < nbHerbergements; i++) {
-            Hebergement herbergement = generateRandomHebergement(i, typeHebergementRepository.getAll(), adresseRepository.getAll());
-            hebergementRepository.save(herbergement.getId(), herbergement);
+            Hebergement herbergement = generateRandomHebergement(i, typeHebergementRepository.getAll(), adresseRepository.getAll(), serviceRepository.getAll());
+            hebergementRepository.save(herbergement);
         }
     }
 
     private void populateTypeHebergement() {
         TypeHebergement typeHebergement1 = new TypeHebergement("Hôtel");
-        typeHebergementRepository.save(typeHebergement1.getId(), typeHebergement1);
+        typeHebergementRepository.save(typeHebergement1);
         TypeHebergement typeHebergement2 = new TypeHebergement("Auberge");
-        typeHebergementRepository.save(typeHebergement2.getId(), typeHebergement2);
+        typeHebergementRepository.save(typeHebergement2);
         TypeHebergement typeHebergement3 = new TypeHebergement("Maison d'hôtes");
-        typeHebergementRepository.save(typeHebergement3.getId(), typeHebergement3);
+        typeHebergementRepository.save(typeHebergement3);
         TypeHebergement typeHebergement4 = new TypeHebergement("Camping");
-        typeHebergementRepository.save(typeHebergement4.getId(), typeHebergement4);
+        typeHebergementRepository.save(typeHebergement4);
     }
 
     private void populateAdresses(int nbAdresses) {
         for (int i = 0; i < nbAdresses; i++) {
             Adresse adresse = generateRandomAdresse(i);
-            adresseRepository.save(adresse.getId(), adresse);
+            adresseRepository.save(adresse);
         }
     }
 
@@ -59,11 +58,11 @@ public class InitData {
         String[] quartiers = {"Centre Ville", "Quartier Latin", "Gracia", "Altstadt", "Brera"};
         String[] rues = {"Rue de la Paix", "Avenue des Champs-Élysées", "Carrer de la Marina", "Maximilianstrasse", "Via Monte Napoleone"};
 
-        int paysIndex = (int) (Math.random() * pays.length);
-        int provinceIndex = (int) (Math.random() * provinces.length);
-        int villeIndex = (int) (Math.random() * villes.length);
-        int quartierIndex = (int) (Math.random() * quartiers.length);
-        int rueIndex = (int) (Math.random() * rues.length);
+        int paysIndex = r.nextInt(pays.length);
+        int provinceIndex = r.nextInt(provinces.length);
+        int villeIndex = r.nextInt(villes.length);
+        int quartierIndex = r.nextInt(quartiers.length);
+        int rueIndex = r.nextInt(rues.length);
 
         return new Adresse(
                 pays[paysIndex],
@@ -74,12 +73,29 @@ public class InitData {
         );
     }
 
-    private Hebergement generateRandomHebergement(int constante, List<TypeHebergement> typeHebergements, List<Adresse> adresses) {
+    private void populateServices() {
+        String[] labels = {"piscine intérieure", "cuisinette", "salle de conditionnement physique", "stationnement", "accès handicapé", "dépanneur", "restauran"};
+
+        for (String label: labels) {
+            Service service = new Service(label);
+            serviceRepository.save(service);
+        }
+    }
+
+    private void populateChambres(int nbChambres) {
+        // TODO
+    }
+
+    private Hebergement generateRandomHebergement(int constante, List<TypeHebergement> typeHebergements, List<Adresse> adresses, List<Service> services) {
         String[] noms = {"Le soleil", "La lune", "Les étoiles", "La mer", "La montagne", "La campagne"};
 
-        String nom = noms[(int) (Math.random() * noms.length)] + " " + constante;
-        Adresse adresse = adresses.get((int) (Math.random() * adresses.size()));
-        TypeHebergement typeHebergement = typeHebergements.get((int) (Math.random() * typeHebergements.size()));
-        return new Hebergement(nom, typeHebergement, adresse, new ArrayList<>(), new ArrayList<>());
+        String nom = noms[r.nextInt(noms.length)] + " " + constante;
+        Adresse adresse = adresses.get(r.nextInt(adresses.size()));
+        TypeHebergement typeHebergement = typeHebergements.get(r.nextInt(typeHebergements.size()));
+        List<Service> servicesHebergement = new ArrayList<>();
+        for (int i = 0; i < r.nextInt(services.size()); i++) {
+            servicesHebergement.add(services.get(r.nextInt(services.size())));
+        }
+        return new Hebergement(nom, typeHebergement, adresse, servicesHebergement, new ArrayList<>());
     }
 }

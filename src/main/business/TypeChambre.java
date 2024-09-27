@@ -1,21 +1,18 @@
 package main.business;
 
-import java.util.concurrent.atomic.AtomicLong;
+import main.utils.Entity;
 
-public class TypeChambre {
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private Long id;
+public class TypeChambre extends Entity {
     private String libelle;
 
     public TypeChambre(String libelle) {
-        this.id = idGenerator.incrementAndGet();
         this.libelle = libelle;
     }
 
     @Override
     public String toString() {
         return "TypeChambre{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", libelle='" + libelle + '\'' +
                 '}';
     }

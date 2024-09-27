@@ -1,11 +1,10 @@
 package main.business;
 
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicLong;
+import main.utils.Entity;
 
-public class Reservation {
-    private static final AtomicLong idGenerator = new AtomicLong(0);
-    private Long id;
+import java.util.Date;
+
+public class Reservation extends Entity {
     private Date dateDebut;
     private Date dateFin;
     private int prixTotal;
@@ -13,7 +12,6 @@ public class Reservation {
     private Chambre chambre;
 
     public Reservation(Date dateDebut, Date dateFin, int prixTotal, Client client, Chambre chambre) {
-        this.id = idGenerator.incrementAndGet();
         this.dateDebut = dateDebut;
         this.dateFin = dateFin;
         this.prixTotal = prixTotal;
@@ -24,7 +22,7 @@ public class Reservation {
     @Override
     public String toString() {
         return "Reservation{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", prixTotal=" + prixTotal +
