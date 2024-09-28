@@ -95,11 +95,9 @@ public class InitData {
         List<Hebergement> hebergements = hebergementRepository.getAll();
         List<TypeChambre> typesChambre = typeChambreRepository.getAll();
         
-        Random random = new Random();
-        
         for (Hebergement hebergement : hebergements) {
             // Définir un nombre aléatoire de chambres à générer (entre 1 et 10 par exemple)
-            int nbChambres = random.nextInt(nbMaxChambre) + 1;
+            int nbChambres = r.nextInt(nbMaxChambre) + 1;
             
             for (int i = 0; i < nbChambres; i++) {
                 // Tirer un type de chambre aléatoirement en fonction d'une probabilité logique
@@ -117,8 +115,7 @@ public class InitData {
     
     // Méthode pour générer un type de chambre aléatoirement avec des probabilités différentes
     private TypeChambre getRandomTypeChambre(List<TypeChambre> typesChambre) {
-        Random random = new Random();
-        int rand = random.nextInt(100); // Tirer un nombre entre 0 et 99
+        int rand = r.nextInt(100); // Tirer un nombre entre 0 et 99
         
         if (rand < 40) {
             // 40% de chance de tomber sur une chambre simple
@@ -134,7 +131,7 @@ public class InitData {
             return typesChambre.stream().filter(tc -> tc.getLibelle().equals("Suite")).findFirst().orElse(null);
         } else {
             // 10% de chance de tomber sur un autre type (deluxe, executive, etc.)
-            return typesChambre.get(random.nextInt(typesChambre.size()));
+            return typesChambre.get(r.nextInt(typesChambre.size()));
         }
     }
     
@@ -142,15 +139,15 @@ public class InitData {
     private int generatePrixSelonType(TypeChambre typeChambre) {
         switch (typeChambre.getLibelle()) {
             case "Chambre Simple":
-                return 50 + new Random().nextInt(50);  // Entre 50 et 100€
+                return 50 + r.nextInt(50);  // Entre 50 et 100€
             case "Chambre Double":
-                return 80 + new Random().nextInt(70);  // Entre 80 et 150€
+                return 80 + r.nextInt(70);  // Entre 80 et 150€
             case "Chambre Familiale":
-                return 120 + new Random().nextInt(80); // Entre 120 et 200€
+                return 120 + r.nextInt(80); // Entre 120 et 200€
             case "Suite":
-                return 200 + new Random().nextInt(150); // Entre 200 et 350€
+                return 200 + r.nextInt(150); // Entre 200 et 350€
             default:
-                return 100 + new Random().nextInt(100); // Autres types de chambres
+                return 100 + r.nextInt(100); // Autres types de chambres
         }
     }
     
