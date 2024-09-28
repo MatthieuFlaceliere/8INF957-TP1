@@ -5,12 +5,10 @@ import main.utils.Entity;
 public class Chambre extends Entity {
     private int prix;
     private TypeChambre typeChambre;
-    private Hebergement hebergement;
 
-    public Chambre(int prix, TypeChambre typeChambre, Hebergement hebergement) {
+    public Chambre(int prix, TypeChambre typeChambre) {
         this.prix = prix;
         this.typeChambre = typeChambre;
-        this.hebergement = hebergement;
     }
 
     @Override
@@ -19,7 +17,6 @@ public class Chambre extends Entity {
                 "id=" + getId() +
                 ", prix=" + prix +
                 ", typeChambre=" + typeChambre +
-                ", Hebergement=" + hebergement +
                 '}';
     }
 }
