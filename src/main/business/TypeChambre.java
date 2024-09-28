@@ -16,4 +16,8 @@ public class TypeChambre extends Entity {
                 ", libelle='" + libelle + '\'' +
                 '}';
     }
+
+    public String getLibelle(){
+        return this.libelle;
+    }
 }

@@ -19,7 +19,7 @@ public class Chambre extends Entity {
                 "id=" + getId() +
                 ", prix=" + prix +
                 ", typeChambre=" + typeChambre +
-                ", typeHebergement=" + hebergement +
+                ", Hebergement=" + hebergement +
                 '}';
     }
 }

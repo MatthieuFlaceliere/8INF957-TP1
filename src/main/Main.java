@@ -7,7 +7,7 @@ import main.repository.GenericRepository;
 
 public class Main {
     public static void main(String[] args) {
-        new InitData(10);
+        new InitData(10,10);
         GenericRepository<Service> serviceRepository = GenericRepository.getInstance(Service.class);
         GenericRepository<Hebergement> hebergementRepository = GenericRepository.getInstance(Hebergement.class);
 
