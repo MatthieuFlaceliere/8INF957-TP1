@@ -19,15 +19,28 @@ public class Hebergement extends Entity {
         this.chambres = chambres;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public TypeHebergement getType() {
+        return type;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public List<Chambre> getChambres() {
+        return chambres;
+    }
+
     @Override
     public String toString() {
-        return "Hebergement{" +
-                "id=" + getId() +
-                ", nom=" + nom +
-                ", type=" + type +
-                ", adresse=" + adresse +
-                ", services=" + services +
-                ", chambres=" + chambres +
-                '}';
+        return getId() + " - " + nom + " - " + type + " - " + services + " - " + chambres + " - " + adresse;
     }
 }

@@ -9,15 +9,12 @@ public class TypeChambre extends Entity {
         this.libelle = libelle;
     }
 
-    @Override
-    public String toString() {
-        return "TypeChambre{" +
-                "id=" + getId() +
-                ", libelle='" + libelle + '\'' +
-                '}';
+    public String getLibelle() {
+        return libelle;
     }
 
-    public String getLibelle(){
-        return this.libelle;
+    @Override
+    public String toString() {
+        return libelle;
     }
 }

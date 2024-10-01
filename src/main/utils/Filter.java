@@ -50,4 +50,35 @@ public class Filter {
             return new Filter(this);
         }
     }
+
+    public TypeHebergement getType() {
+        return type;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public TypeChambre getTypeChambre() {
+        return typeChambre;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder servicesString = new StringBuilder();
+        if (services != null) {
+            for (Service service : services) {
+                servicesString.append(service.getLibelle()).append(", ");
+            }
+        }
+
+        return "type=" + (type != null ? type.getLibelle() : "Non spécifié") +
+                ", adresse=" + (adresse != null ? adresse : "Non spécifié") +
+                ", typeChambre=" + (typeChambre != null ? typeChambre.getLibelle() : "Non spécifié") +
+                ", services=" + (!servicesString.isEmpty() ? servicesString : "Non spécifiés");
+    }
 }

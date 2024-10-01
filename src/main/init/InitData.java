@@ -109,7 +109,10 @@ public class InitData {
         TypeHebergement typeHebergement = typeHebergements.get(r.nextInt(typeHebergements.size()));
         List<Service> servicesHebergement = new ArrayList<>();
         for (int i = 0; i < r.nextInt(services.size()); i++) {
-            servicesHebergement.add(services.get(r.nextInt(services.size())));
+            Service newService = services.get(r.nextInt(services.size()));
+            if (!servicesHebergement.contains(newService)) {
+                servicesHebergement.add(newService);
+            }
         }
 
         return new Hebergement(nom, typeHebergement, adresse, servicesHebergement, generateChambres(2,10));

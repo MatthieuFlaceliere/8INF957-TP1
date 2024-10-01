@@ -19,13 +19,6 @@ public class Adresse extends Entity {
 
     @Override
     public String toString() {
-        return "Adresse{" +
-                "rue='" + rue + '\'' +
-                ", quartier='" + quartier + '\'' +
-                ", ville='" + ville + '\'' +
-                ", province='" + province + '\'' +
-                ", pays='" + pays + '\'' +
-                ", id=" + getId() +
-                '}';
+        return rue + ", " + quartier + ", " + ville + ", " + province + ", " + pays;
     }
 }

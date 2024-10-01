@@ -6,5 +6,7 @@ import main.utils.Filter;
 import java.util.List;
 
 public interface HebergementService {
-    List<Hebergement> getHebergementsByFilter(Filter filter);
+    List<Hebergement> getByFilter(Filter filter);
+    List<Hebergement> getAll();
+    List<TypeHebergement> getAllType();
 }

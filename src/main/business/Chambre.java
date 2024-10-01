@@ -4,19 +4,23 @@ import main.utils.Entity;
 
 public class Chambre extends Entity {
     private int prix;
-    private TypeChambre typeChambre;
+    private TypeChambre type;
 
     public Chambre(int prix, TypeChambre typeChambre) {
         this.prix = prix;
-        this.typeChambre = typeChambre;
+        this.type = typeChambre;
+    }
+
+    public TypeChambre getType() {
+        return type;
+    }
+
+    public int getPrix() {
+        return prix;
     }
 
     @Override
     public String toString() {
-        return "Chambre{" +
-                "id=" + getId() +
-                ", prix=" + prix +
-                ", typeChambre=" + typeChambre +
-                '}';
+        return type + " à " + prix + "$";
     }
 }

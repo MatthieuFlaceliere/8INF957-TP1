@@ -9,11 +9,12 @@ public class Service extends Entity {
         this.libelle = libelle;
     }
 
+    public String getLibelle() {
+        return libelle;
+    }
+
     @Override
     public String toString() {
-        return "Service{" +
-                "id=" + getId() +
-                ", libelle='" + libelle + '\'' +
-                '}';
+        return libelle;
     }
 }

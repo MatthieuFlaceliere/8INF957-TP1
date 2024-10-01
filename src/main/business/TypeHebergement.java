@@ -10,11 +10,12 @@ public class TypeHebergement extends Entity {
         this.libelle = libelle;
     }
 
+    public String getLibelle() {
+        return libelle;
+    }
+
     @Override
     public String toString() {
-        return "TypeHebergement{" +
-                "id=" + getId() +
-                ", libelle='" + libelle + '\'' +
-                '}';
+        return libelle;
     }
 }
