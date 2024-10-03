@@ -16,16 +16,23 @@ public class Main {
     private static final HebergementService hebergementService = new HebergementServiceImpl();
     private static final ReservationService reservationService = new ReservationServiceImpl();
     private static final int NB_HEBERGEMENTS = 100;
+    private static final Date DATE_DEBUT = new Date();
+    private static final Date DATE_FIN = new Date(DATE_DEBUT.getTime() + 1000 * 60 * 60 * 24 * 7); // 7 jours après
 
     public static void main(String[] args) {
+        printLine();
         System.out.println("Création de " + NB_HEBERGEMENTS + " hébergements");
         new InitData(NB_HEBERGEMENTS);
         System.out.println("Fin de la création " + hebergementService.getAll().size() + " hébergements \n\n");
+
+        printLine();
 
         System.out.println("Test filtre sur les hébergements \n");
         Filter filter = new Filter.Builder()
                 .setType(hebergementService.getAllType().get(0))
                 .setServices(GenericRepository.getInstance(Service.class).getAll().subList(0, 2))
+                .setDateDebut(DATE_DEBUT)
+                .setDateFin(DATE_FIN)
                 .build();
         System.out.println("Filtre: " + filter + "\n");
 
@@ -35,20 +42,49 @@ public class Main {
             System.out.println(hebergement);
         }
 
+        printLine();
+
         System.out.println("\nTest reservation d'une chambre \n");
 
-        Date dateDebut = new Date();
-        Date dateFin = new Date(dateDebut.getTime() + 1000 * 60 * 60 * 24 * 7); // 7 jours après
         Client client = new Client("Jean", "Dupont", "jeandupont@mail.com", "0123456789", "17 rue de la paix");
         if (hebergements.isEmpty()) {
             hebergements = hebergementService.getAll();
         }
-        Reservation reservation = new Reservation(dateDebut, dateFin, client, hebergements.get(0).getChambres().get(0));
+        Reservation reservation = new Reservation(DATE_DEBUT, DATE_FIN, client, hebergements.get(0).getChambres().get(0), hebergements.get(0));
 
         System.out.println("Réservation: " + reservation + "\n");
 
-        reservationService.createReservation(reservation);
+        try {
+            reservationService.createReservation(reservation);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur: " + e.getMessage());
+        }
 
-        System.out.println("Fin de la réservation \n\n");
+        System.out.println("Réservation effectuée avec succès \n\n");
+
+        printLine();
+
+        System.out.println("Test reservation d'une chambre déjà réservée \n");
+
+        System.out.println("Réservation: " + reservation + "\n");
+
+        try {
+            reservationService.createReservation(reservation);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erreur: " + e.getMessage());
+        }
+
+        printLine();
+
+        System.out.println("\nHerbergements après réservation la chambre n'est plus disponible \n");
+        List<Hebergement> hebergementsAfterReservation = hebergementService.getByFilter(filter);
+        for (Hebergement hebergement : hebergementsAfterReservation) {
+            System.out.println(hebergement);
+        }
+
+    }
+
+    private static void printLine() {
+        System.out.println("-".repeat(100));
     }
 }

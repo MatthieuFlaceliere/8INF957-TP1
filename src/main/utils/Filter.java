@@ -5,6 +5,8 @@ import main.business.Service;
 import main.business.TypeChambre;
 import main.business.TypeHebergement;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Filter {
@@ -12,12 +14,16 @@ public class Filter {
     private Adresse adresse;
     private TypeChambre typeChambre;
     private List<Service> services;
+    private Date dateDebut;
+    private Date dateFin;
 
     private Filter(Builder builder) {
         this.type = builder.type;
         this.adresse = builder.adresse;
         this.typeChambre = builder.typeChambre;
         this.services = builder.services;
+        this.dateDebut = builder.dateDebut;
+        this.dateFin = builder.dateFin;
     }
 
     public static class Builder {
@@ -25,6 +31,8 @@ public class Filter {
         private Adresse adresse;
         private TypeChambre typeChambre;
         private List<Service> services;
+        private Date dateDebut;
+        private Date dateFin;
 
         public Builder setType(TypeHebergement type) {
             this.type = type;
@@ -43,6 +51,16 @@ public class Filter {
 
         public Builder setServices(List<Service> services) {
             this.services = services;
+            return this;
+        }
+
+        public Builder setDateDebut(Date dateDebut) {
+            this.dateDebut = dateDebut;
+            return this;
+        }
+
+        public Builder setDateFin(Date dateFin) {
+            this.dateFin = dateFin;
             return this;
         }
 
@@ -67,6 +85,14 @@ public class Filter {
         return services;
     }
 
+    public Date getDateDebut() {
+        return dateDebut;
+    }
+
+    public Date getDateFin() {
+        return dateFin;
+    }
+
     @Override
     public String toString() {
         StringBuilder servicesString = new StringBuilder();
@@ -76,9 +102,13 @@ public class Filter {
             }
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         return "type=" + (type != null ? type.getLibelle() : "Non spécifié") +
                 ", adresse=" + (adresse != null ? adresse : "Non spécifié") +
                 ", typeChambre=" + (typeChambre != null ? typeChambre.getLibelle() : "Non spécifié") +
+                ", dateDebut=" + (dateDebut != null ? sdf.format(dateDebut) : "Non spécifiée") +
+                ", dateFin=" + (dateFin != null ? sdf.format(dateFin) : "Non spécifiée") +
                 ", services=" + (!servicesString.isEmpty() ? servicesString : "Non spécifiés");
     }
 }
