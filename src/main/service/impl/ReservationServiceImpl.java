@@ -26,6 +26,12 @@ public class ReservationServiceImpl implements ReservationService {
         reservationRepository.save(reservation);
     }
 
+    @Override
+    public void cancelReservation(Reservation reservation) {
+        reservationRepository.delete(reservation.getId());
+    }
+
+    @Override
     public boolean validDatesRange(Chambre chambre, Date dateDebut, Date fateFin){
         List<Reservation> reservations = reservationRepository.getAll();
 
