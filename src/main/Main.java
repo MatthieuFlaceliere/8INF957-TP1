@@ -23,7 +23,7 @@ public class Main {
         printLine();
         System.out.println("Création de " + NB_HEBERGEMENTS + " hébergements");
         new InitData(NB_HEBERGEMENTS);
-        System.out.println("Fin de la création " + hebergementService.getAll().size() + " hébergements \n\n");
+        System.out.println("Fin de la création " + hebergementService.getAll().size() + " hébergements \n");
 
         printLine();
 
@@ -33,6 +33,7 @@ public class Main {
                 .setServices(GenericRepository.getInstance(Service.class).getAll().subList(0, 2))
                 .setDateDebut(DATE_DEBUT)
                 .setDateFin(DATE_FIN)
+                .setMaxPrix(1000)
                 .build();
         System.out.println("Filtre: " + filter + "\n");
 
@@ -60,7 +61,7 @@ public class Main {
             System.out.println("Erreur: " + e.getMessage());
         }
 
-        System.out.println("Réservation effectuée avec succès \n\n");
+        System.out.println("Réservation effectuée avec succès \n");
 
         printLine();
 

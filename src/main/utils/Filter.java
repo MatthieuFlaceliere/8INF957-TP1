@@ -16,6 +16,7 @@ public class Filter {
     private List<Service> services;
     private Date dateDebut;
     private Date dateFin;
+    private int maxPrix;
 
     private Filter(Builder builder) {
         this.type = builder.type;
@@ -24,6 +25,7 @@ public class Filter {
         this.services = builder.services;
         this.dateDebut = builder.dateDebut;
         this.dateFin = builder.dateFin;
+        this.maxPrix = builder.maxPrix;
     }
 
     public static class Builder {
@@ -33,6 +35,7 @@ public class Filter {
         private List<Service> services;
         private Date dateDebut;
         private Date dateFin;
+        private int maxPrix;
 
         public Builder setType(TypeHebergement type) {
             this.type = type;
@@ -61,6 +64,11 @@ public class Filter {
 
         public Builder setDateFin(Date dateFin) {
             this.dateFin = dateFin;
+            return this;
+        }
+
+        public Builder setMaxPrix(int maxPrix) {
+            this.maxPrix = maxPrix;
             return this;
         }
 
@@ -93,6 +101,10 @@ public class Filter {
         return dateFin;
     }
 
+    public int getMaxPrix() {
+        return maxPrix;
+    }
+
     @Override
     public String toString() {
         StringBuilder servicesString = new StringBuilder();
@@ -109,6 +121,7 @@ public class Filter {
                 ", typeChambre=" + (typeChambre != null ? typeChambre.getLibelle() : "Non spécifié") +
                 ", dateDebut=" + (dateDebut != null ? sdf.format(dateDebut) : "Non spécifiée") +
                 ", dateFin=" + (dateFin != null ? sdf.format(dateFin) : "Non spécifiée") +
+                ", maxPrix=" + (maxPrix != 0 ? maxPrix : "Non spécifié") +
                 ", services=" + (!servicesString.isEmpty() ? servicesString : "Non spécifiés");
     }
 }

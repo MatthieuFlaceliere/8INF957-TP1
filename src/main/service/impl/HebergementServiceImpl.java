@@ -1,10 +1,12 @@
 package main.service.impl;
 
+import main.business.Chambre;
 import main.business.Hebergement;
 import main.business.Reservation;
 import main.business.TypeHebergement;
 import main.repository.GenericRepository;
 import main.service.HebergementService;
+import main.service.ReservationService;
 import main.utils.Filter;
 
 import java.util.*;
@@ -12,12 +14,11 @@ import java.util.*;
 public class HebergementServiceImpl implements HebergementService {
     private static final GenericRepository<Hebergement> hebergementRepository = GenericRepository.getInstance(Hebergement.class);
     private static final GenericRepository<TypeHebergement> typeHebergementRepository = GenericRepository.getInstance(TypeHebergement.class);
-    private static final GenericRepository<Reservation> reservationRepository = GenericRepository.getInstance(Reservation.class);
+    private static final ReservationService reservationService = new ReservationServiceImpl();
 
     @Override
     public List<Hebergement> getByFilter(Filter filter) {
         List<Hebergement> hebergements = new ArrayList<>(hebergementRepository.getAll());
-        List<Reservation> reservations = reservationRepository.getAll();
 
         if (filter == null) {
             return hebergements;
@@ -43,23 +44,17 @@ public class HebergementServiceImpl implements HebergementService {
             hebergements.removeIf(hebergement -> !new HashSet<>(hebergement.getServices()).containsAll(filter.getServices()));
         }
 
-        // Remove chambre if already reserved
+        // Remove chambre if already reserved and max price
         if (filter.getDateDebut() != null && filter.getDateFin() != null) {
             for (Hebergement hebergement : hebergements) {
                 hebergement.getChambres().removeIf(chambre ->
-                        reservations.stream().anyMatch(reservation ->
-                                reservation.getChambre().getId().equals(chambre.getId()) &&
-                                datesRangeValid(filter.getDateDebut(), filter.getDateFin(), reservation.getDateDebut(), reservation.getDateFin())
-                        )
+                        reservationService.validDatesRange(chambre, filter.getDateDebut(), filter.getDateFin()) ||
+                        chambre.getPrix() > filter.getMaxPrix()
                 );
             }
         }
 
         return hebergements;
-    }
-
-    private static boolean datesRangeValid(Date dateDebut, Date dateFin, Date dateDebutTest, Date dateFinTest) {
-        return dateFin.before(dateDebut) || dateFinTest.after(dateDebutTest);
     }
 
     @Override

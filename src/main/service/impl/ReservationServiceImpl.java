@@ -1,9 +1,11 @@
 package main.service.impl;
 
+import main.business.Chambre;
 import main.business.Reservation;
 import main.repository.GenericRepository;
 import main.service.ReservationService;
 
+import java.util.Date;
 import java.util.List;
 
 public class ReservationServiceImpl implements ReservationService {
@@ -22,5 +24,17 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         reservationRepository.save(reservation);
+    }
+
+    public boolean validDatesRange(Chambre chambre, Date dateDebut, Date fateFin){
+        List<Reservation> reservations = reservationRepository.getAll();
+
+        return reservations.stream().anyMatch(reservation ->
+                reservation.getChambre().getId().equals(chambre.getId()) &&
+                        datesRangeValid(dateDebut, fateFin, reservation.getDateDebut(), reservation.getDateFin())
+        );
+    }
+    private boolean datesRangeValid(Date dateDebut, Date dateFin, Date dateDebutTest, Date dateFinTest) {
+        return dateFin.before(dateDebut) || dateFinTest.after(dateDebutTest);
     }
 }

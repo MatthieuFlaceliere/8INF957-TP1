@@ -41,6 +41,9 @@ public class Hebergement extends Entity {
 
     @Override
     public String toString() {
-        return getId() + " - " + nom + " - " + type + " - " + services + " - " + chambres + " - " + adresse;
+        return getId() + " - " + type + " " + nom + "\n" +
+                "  Adresse: " + adresse + "\n" +
+                "  Services: " + services + "\n" +
+                "  Chambres disponibles: " + chambres;
     }
 }
