@@ -29,6 +29,8 @@ Il peut ensuite réserver une chambre avec les informations personnelles du clie
 **Service**: Class représentant un service\
 **Adresse**: Class représentant une adresse d'un hébergement\
 
+Toutes les classes business héritent de la classe Entity qui permet de gérer l'identifiant unique de chaque objet.
+
 ### Digramme de service de l'application:
 
 <img src="images/service.png">
@@ -137,7 +139,7 @@ Process finished with exit code 0
 
 ## Exécution du programme
 
-Clonez le projet:
+### Clonez le projet:
 ```bash
 git clone https://github.com/MatthieuFlaceliere/8INF957-TP1
 ```
